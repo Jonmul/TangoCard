@@ -1,0 +1,41 @@
+/*
+Jonathan Muller
+
+Tango Card Page CSS
+
+*/
+body, input, select, option, button, a{
+	font-family: Arial;
+	font-size: 14pt;
+}
+body, h1 {
+	margin: 0;
+	padding: 0;
+}
+
+
+
+.head {
+	background-color: #F0EFED;
+	color: #9A3333;
+	padding: 0.5em;
+	text-align:center
+}
+.foot {
+	background-color: #5A5B5D;
+	color: white;
+	padding: 0.5em;
+	height: 100px;
+	text-align:center
+}
+.page {
+	position: fixed;
+	margin: 0 auto;
+}
+
+#main, h1{
+	width: 400px ;
+	margin-left: auto;
+	margin-right:auto;
+	
+}
