@@ -55,7 +55,8 @@ function getBal($username, $password){
             $tango_cents_available_balance = $response->getAvailableBalance();
 			$_SESSION["balance"] = $tango_cents_available_balance;
             $tango_dollars_available_balance = number_format((double)$tango_cents_available_balance/100, 2);
-            echo "\tCurrent balance: $" . $tango_dollars_available_balance . " dollars.\n";
+			$_SESSION["balanced"] = $tango_dollars_available_balance ;
+            //echo "\tCurrent balance: $" . $tango_dollars_available_balance . " dollars.\n";
         } else {
             throw new RuntimeException('Unexpected response.');
         }
