@@ -14,9 +14,6 @@ if(!isset($_POST)){
 }
 $username = $_POST["username"];
 $password=$_POST["password"];
-$filecontents=file("users.txt");
-$newaccount=true;
-$fileline=$username.":".$password."\n";
 #check if user exists
 include("common.php");
 include("lib/TangoCardSdkAutoloader.php");
