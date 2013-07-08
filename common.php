@@ -35,3 +35,90 @@ function makefooter(){ ?>
 	</div>
 
 <?php } ?>
+
+<?php
+function getBal($username, $password){ 
+	$enumTangoCardServiceApi = \TangoCard\Sdk\Service\TangoCardServiceApiEnum::INTEGRATION;
+    $response = null;
+
+    if ( \TangoCard\Sdk\TangoCardServiceApi::GetAvailableBalance(
+            $enumTangoCardServiceApi,
+            $username, 
+            $password,
+            $response
+            ) 
+        && (null != $response)
+    ) {  
+        // we have a response from the server, lets see what we got (and do something with it)
+        if (is_a($response, 'TangoCard\Sdk\Response\Success\GetAvailableBalanceResponse')) {
+           # echo "\nSuccess - GetAvailableBalance - Initial\n";
+            $tango_cents_available_balance = $response->getAvailableBalance();
+			$_SESSION["balance"] = $tango_cents_available_balance;
+            $tango_dollars_available_balance = number_format((double)$tango_cents_available_balance/100, 2);
+            echo "\tCurrent balance: $" . $tango_dollars_available_balance . " dollars.\n";
+        } else {
+            throw new RuntimeException('Unexpected response.');
+        }
+    }
+}
+?>
+
+<?php
+function purchaseCard($username,$password, $amount){
+	$enumTangoCardServiceApi = \TangoCard\Sdk\Service\TangoCardServiceApiEnum::INTEGRATION;
+    $card_sku = "tango-card";
+    $cardValueTangoCardCents = $amount; // $1.00 dollars
+    $responsePurchaseCard = null;
+
+    if ( \TangoCard\Sdk\TangoCardServiceApi::PurchaseCard(
+            $enumTangoCardServiceApi,
+            $username, 
+            $password,
+            $card_sku,                              // cardSku
+            $cardValueTangoCardCents,               // cardValue
+            true,                                   // tcSend 
+            "Sally Example",                        // recipientName
+            "sally@example.com",                    // recipientEmail
+            "Happy Birthday",                       // giftMessage
+            "Bill Example",                         // giftFrom
+            null,                                   // companyIdentifier (default Tango Card email template)
+            $responsePurchaseCard                   // response
+        ) 
+        && (null != $responsePurchaseCard)
+    ) {
+        // we have a response from the server, lets see what we got (and do something with it)
+       // if (is_a($response, 'TangoCard\Sdk\Response\Success\PurchaseCardResponse')) {
+		if(true){
+            //echo "\nSuccess - PurchaseCard - Delivery\n";
+            //echo "    Reference Order ID: "  . $responsePurchaseCard->getReferenceOrderId() ."\n";
+            //echo "    Card Token:         "  . $responsePurchaseCard->getCardToken() . "\n";
+            //echo "    Card Number:        "  . $responsePurchaseCard->getCardNumber() . "\n";
+            //echo "    Card Pin:           "  . $responsePurchaseCard->getCardPin() . "\n";
+            //echo "    Claim Url:          "  . $responsePurchaseCard->getClaimUrl() . "\n";
+            //echo "    Challenge Key:      "  . $responsePurchaseCard->getChallengeKey() . "\n";
+            //echo "    Event Number:       '"  . $responsePurchaseCard_Delivery->getEventNumber() . "'\n";
+			$oid=$responsePurchaseCard->getReferenceOrderId();
+			$ct=$responsePurchaseCard->getCardToken();
+			$cn=$responsePurchaseCard->getCardNumber();
+			$cp=$responsePurchaseCard->getCardPin();
+			$curl=$responsePurchaseCard->getClaimUrl();
+			$ckey=$responsePurchaseCard->getChallengeKey();
+			?>
+			<p>
+				Success - PurchaseCard - Delivery<br />
+				Reference Order ID: <?=$oid ?> <br />
+				Card Token: <?=$ct ?> <br />
+				Card Number: <?=$cn ?> <br />
+				Card Pin: <?=$cp ?> <br />
+				Claim Url: <?=$curl ?> <br />
+				Challenge Key: <?=$ckey ?> <br />
+				
+			</p>
+			<?php
+        } else {
+            throw new RuntimeException('Unexpected response.');
+        }
+    }
+
+
+} ?>
