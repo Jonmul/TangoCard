@@ -10,6 +10,7 @@ session_start();
 $username=$_SESSION["username"];
 $date=$_COOKIE["tclogindate"];
 $password=$_SESSION["password"];
+$bal=$_SESSION["balanced"];
 include("lib/TangoCardSdkAutoloader.php");
 include("common.php");
 
@@ -28,7 +29,7 @@ include("common.php");
 
 			<p>
 				Greetings <?=$username ?>! <br />
-				<?php getBal($username, $password) ?>
+				Current Balance: $<?=$bal ?>
 			</p>
 			<p id="results">
 				<?php  
