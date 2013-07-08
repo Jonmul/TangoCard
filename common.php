@@ -105,7 +105,7 @@ function purchaseCard($username,$password, $amount){
 			$curl=$responsePurchaseCard->getClaimUrl();
 			$ckey=$responsePurchaseCard->getChallengeKey();
 			?>
-			<p>
+			<p id="purchaseresults">
 				Success - PurchaseCard - Delivery<br />
 				Reference Order ID: <?=$oid ?> <br />
 				Card Token: <?=$ct ?> <br />

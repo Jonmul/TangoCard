@@ -35,7 +35,10 @@ body, h1 {
 #results {
 	color: red;
 }
+#purchaseresults {
+	 font-size: 11pt;
 
+}
 #main, h1{
 	width: 600px ;
 	margin-left: auto;
